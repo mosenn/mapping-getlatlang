@@ -1,0 +1,12 @@
+.leaflet-container {
+  overflow: hidden;
+  width: 100vw;
+  height: 30vh;
+}
+
+.ParentMap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
