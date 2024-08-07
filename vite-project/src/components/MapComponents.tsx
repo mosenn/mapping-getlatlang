@@ -9,7 +9,7 @@ interface Marker {
   lng: number;
   id: string; // Add id here for tracking
 }
-
+// try to fixed types
 const socket = io("http://localhost:8090");
 
 const MapComponent = () => {
