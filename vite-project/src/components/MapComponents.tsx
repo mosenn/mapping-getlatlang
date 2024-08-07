@@ -128,10 +128,10 @@ const MapComponent = () => {
 
       <div>
         {markers.map((mark) => (
-          <ul key={mark.id}>
-            <li>lat: {mark.lat}</li>
-            <li>lng: {mark.lng}</li>
-            <button onClick={() => removeData(mark.id)}>Delete</button>
+          <ul className="flex justify-evenly text-center items-center w-full p-3 m-3" key={mark.id}>
+            <li className="text-lg p-3 font-bold rounded-md bg-green-200">lat: {mark.lat}</li>
+            <li className="text-lg p-3 font-bold rounded-md bg-green-200">lng: {mark.lng}</li>
+            <button className="bg-gray-400 p-3 text-gray-800 text-lg" onClick={() => removeData(mark.id)}>Delete</button>
           </ul>
         ))}
       </div>
