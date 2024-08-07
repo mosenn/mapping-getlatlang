@@ -10,10 +10,10 @@ interface Marker {
 
 const MapComponent = () => {
   const [markers, setMarkers] = useState<Marker[]>([
-    { lat: 51.505, lng: -0.09, id: "0" }, // Initial marker with an ID
+    // { lat: 51.505, lng: -0.09, id: "0" }, // Initial marker with an ID
   ]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [updatePostionMarker, setUpdatePostionMarker] = useState(false);
+  const [isDraggableMarker, setIsDraggableMarker] = useState(false);
   const latLangFAkeData = [
     { id: "1", Lat: 51.51765293492706, Lang: -0.1316176278800385 },
     { id: "2", Lat: 51.51956207309098, Lang: -0.09370343259316406 },
@@ -48,19 +48,36 @@ const MapComponent = () => {
     );
   };
 
-  const updateMarkerLatLang = () => {
-    setUpdatePostionMarker((prev) => !prev); // Toggle draggable state
+  // id: string
+  const ActiveDragableMarker = () => {
+    setIsDraggableMarker((prev) => !prev); // Toggle draggable state
+
+
+    // const findMArker = markers.filter((mark) => mark.id === id);
+    // console.log(findMArker, "findmarker");
+    // if (findMArker && id) {
+
+    // }
   };
 
   return (
     <div className="flex flex-col items-center">
-      <button
-        onClick={addMarker}
-        className="mb-4 p-2 bg-blue-500 text-white rounded"
-      >
-        Add Marker
-      </button>
-
+      <div className="flex">
+        <button
+          onClick={addMarker}
+          className="mx-2 mb-4 p-2 bg-blue-500 text-white rounded"
+        >
+          Add Marker
+        </button>
+        <button
+          onClick={() => {
+            ActiveDragableMarker();
+          }}
+          className="mb-4 p-2 bg-green-800 text-white rounded"
+        >
+          {isDraggableMarker ? "Disable Dragging" : "Enable Dragging"}
+        </button>
+      </div>
       <MapContainer
         center={[51.505, -0.09]}
         zoom={13}
@@ -75,7 +92,7 @@ const MapComponent = () => {
           <Marker
             key={marker.id}
             position={[marker.lat, marker.lng]}
-            draggable={updatePostionMarker} // Draggable based on state
+            draggable={isDraggableMarker} // Draggable based on state
             eventHandlers={{
               dragend: (e) => {
                 const newLatLng = e.target.getLatLng(); // Get new coordinates
@@ -85,12 +102,11 @@ const MapComponent = () => {
                   newLatLng.lng
                 ); // Update marker position
                 e.sourceTarget._element.src = "/public/marker-icon.png"; // Ensure this path is correct
-
               },
               dragstart: (e) => {
                 console.log("Drag started for marker:", marker.id);
                 e.sourceTarget._icon.src = "/public/Marker_green-512.webp";
-
+             
               },
             }}
             data-id={marker.id} // Optional, if you need to reference the id
@@ -102,7 +118,7 @@ const MapComponent = () => {
                   onClick={() => removeData(marker.id)}
                   style={{ marginLeft: "10px", cursor: "pointer" }}
                 >
-                  <span className="text-lg">x</span>
+                  <span className="text-lg">delete</span>
                 </button>
               </div>
             </Popup>
@@ -116,12 +132,6 @@ const MapComponent = () => {
             <li>lat: {mark.lat}</li>
             <li>lng: {mark.lng}</li>
             <button onClick={() => removeData(mark.id)}>Delete</button>
-            <button
-              onClick={updateMarkerLatLang}
-              className="mb-4 p-2 bg-green-500 text-white rounded"
-            >
-              {updatePostionMarker ? "Disable Dragging" : "Enable Dragging"}
-            </button>
           </ul>
         ))}
       </div>
