@@ -172,11 +172,11 @@ const MapComponent = () => {
                   newLatLng.lat,
                   newLatLng.lng
                 ); // Update marker position
-                e.sourceTarget._element.src = "/public/marker-icon.png"; // Ensure this path is correct
+                e.sourceTarget._element.src = "./marker-icon.png"; // Ensure this path is correct
               },
               dragstart: (e) => {
                 console.log("Drag started for marker:", marker.locationId);
-                e.sourceTarget._icon.src = "/public/Marker_green-512.webp";
+                e.sourceTarget._icon.src = "public/Marker_green-512.webp";
               },
             }}
             data-locationId={marker.locationId} // Optional, if you need to reference the locationId
