@@ -197,7 +197,7 @@ const MapComponent = () => {
       </MapContainer>
 
       <div>
-        {markers.map((mark, index) => (
+        {markers.map((mark) => (
           <ul
             className="flex justify-evenly text-center items-center w-full p-3 m-3"
             key={mark.locationId}
