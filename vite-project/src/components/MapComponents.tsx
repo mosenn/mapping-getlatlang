@@ -176,7 +176,7 @@ const MapComponent = () => {
               },
               dragstart: (e) => {
                 console.log("Drag started for marker:", marker.locationId);
-                e.sourceTarget._icon.src = "public/Marker_green-512.webp";
+                e.sourceTarget._icon.src = "./Marker_green-512.webp";
               },
             }}
             data-locationId={marker.locationId} // Optional, if you need to reference the locationId
