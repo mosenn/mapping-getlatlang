@@ -17,6 +17,6 @@ model Location {
   id  String  @id @default(auto()) @map("_id") @db.ObjectId
   lat Float    
   lng Float   
-  locationId String @unique
+  locationId String @unique 
   timeLocation String
 }

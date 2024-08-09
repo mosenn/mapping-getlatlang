@@ -29,11 +29,15 @@ export class LocationService {
   }
 
   @SubscribeMessage('deleteLocation') // Listen for delete requests
-  async deleteLocation(@MessageBody() body: { id: string }) {
+  async deleteLocation(
+    @MessageBody() body: { id: string; locationId: string },
+  ) { 
+    console.log(body.id, 'Id in deleteLocation at services');
+  
     try {
       // Delete the location from the database
       const deletedLocation = await this.prisma.location.delete({
-        where: { id: body.id },
+        where: { locationId: body.id },
       });
 
       // Emit an event to notify clients
