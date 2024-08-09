@@ -17,21 +17,25 @@ const MapComponent = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDraggableMarker, setIsDraggableMarker] = useState(false);
+  const randomNum = Math.floor(Math.random() * 1000);
   const latLangFAkeData = [
     {
-      locationId: "1",
+      locationId: Date.now() + `-${randomNum}`,
+
       lat: 51.51765293492706,
       lng: -0.1316176278800385,
       timeLocation: "20:50:55",
     },
     {
-      locationId: "2",
+      locationId: Date.now() + `-${randomNum}`,
+
       lat: 51.51956207309098,
       lng: -0.09370343259316406,
       timeLocation: "12:40:00",
     },
     {
-      locationId: "3",
+      locationId: Date.now() + `-${randomNum}`,
+
       lat: 51.51645462737917,
       lng: -0.060592845758917775,
       timeLocation: "10:30:50",
@@ -47,11 +51,11 @@ const MapComponent = () => {
         { lat, lng, locationId: locationId },
       ]);
       setCurrentIndex((prevIndex) => prevIndex + 1);
-      const randomNum = Math.floor(Math.random() * 1000);
+
       const locationData = {
         lat,
         lng,
-        locationId: Date.now() + `-${randomNum}`,
+        locationId,
         timeLocation,
       }; // Generate a unique ID
       const test = socket?.emit("addLocation", locationData); // Emit the addLocation event
@@ -68,14 +72,15 @@ const MapComponent = () => {
   //   setMarkers(removeMarker);
   // };
 
-
-  const removeData = (id: string) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const removeData = (id: string, marker: any) => {
+    console.log(id, "id in remove data");
+    console.log(marker, "marker");
     // Emit delete event to the server using the correct ObjectID
     socket?.emit("deleteLocation", { id: id }); // Ensure this is the ObjectID
     const removeMarker = markers.filter((mark) => mark.locationId !== id);
     setMarkers(removeMarker);
   };
-  
 
   const getCruunetPositionMarker = (
     locationId: string,
@@ -185,7 +190,7 @@ const MapComponent = () => {
               <div>
                 Marker at [{marker.lat}, {marker.lng}]
                 <button
-                  onClick={() => removeData(marker.locationId)}
+                  onClick={() => removeData(marker.locationId, marker)}
                   style={{ marginLeft: "10px", cursor: "pointer" }}
                 >
                   <span className="text-lg">delete</span>
@@ -210,7 +215,7 @@ const MapComponent = () => {
             </li>
             <button
               className="bg-gray-400 p-3 text-gray-800 text-lg"
-              onClick={() => removeData(mark.locationId)}
+              onClick={() => removeData(mark.locationId, mark)}
             >
               Delete
             </button>
